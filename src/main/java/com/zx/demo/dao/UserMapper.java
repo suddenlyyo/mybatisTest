@@ -3,6 +3,7 @@ package com.zx.demo.dao;
 import com.zx.demo.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public interface UserMapper {
      * @since: 2023-05-26
      */
     @Select("SELECT id, name, age FROM users WHERE id = #{id}")
-    User getUserById(int id);
+    User getUserById(@Param("id")int id);
 
     /**
      *  批量插入UserList
@@ -50,5 +51,14 @@ public interface UserMapper {
             "</foreach>",
             "</script>"
     })
-    void batchInsertUser(List<User> list);
+    void batchInsertUser(@Param("list") List<User> list);
+
+    /**
+     * 查询用户列表
+     * @return java.util.List
+     * @author: zhou  xun
+     * @since: 2023-05-26
+     */
+    @Select("SELECT id, name, age FROM users ")
+    List<User> getListUser();
 }

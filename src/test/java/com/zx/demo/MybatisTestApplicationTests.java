@@ -1,5 +1,6 @@
 package com.zx.demo;
 
+import com.github.jsonzou.jmockdata.JMockData;
 import com.zx.demo.dao.UserMapper;
 import com.zx.demo.model.User;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,5 +34,21 @@ class MybatisTestApplicationTests {
     public void getUserByIdTest() {
         User user = userMapper.getUserById(1);
         System.out.println(user);
+    }
+
+    @Test
+    public void batchInsertUserTest() {
+        List<User> userList = new ArrayList<>();
+        //mock User对象
+        User user = JMockData.mock(User.class);
+        userList.add(user);
+        //批量插入
+        userMapper.batchInsertUser(userList);
+    }
+
+    @Test
+    public void getListUserTest() {
+        List<User> listUser = userMapper.getListUser();
+        listUser.forEach(System.out::println);
     }
 }
