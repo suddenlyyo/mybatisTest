@@ -28,8 +28,8 @@ class MybatisTestApplicationTests {
     }
 
     @Test
-    public void queryUserByIdTest() {
-        User user = userMapper.queryUserById(1);
+    public void getUserByIdTest() {
+        User user = userMapper.getUserById(1);
         System.out.println(user);
     }
 }
