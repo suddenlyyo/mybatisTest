@@ -1,5 +1,6 @@
 package com.zx.demo.dao;
 
+import com.zx.demo.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,4 +16,6 @@ import java.util.Map;
 public interface UserMapper {
     @Select("SELECT id, name, age FROM users WHERE id = #{id}")
     Map<String,Object> findById(int id);
+    @Select("SELECT id, name, age FROM users WHERE id = #{id}")
+    User queryUserById(int id);
 }

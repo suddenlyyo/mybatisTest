@@ -2,6 +2,7 @@ package com.zx.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @create: 2023-05-15 12:41
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class User implements Serializable {
     private int id;

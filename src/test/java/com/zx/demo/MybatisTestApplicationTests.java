@@ -1,6 +1,7 @@
 package com.zx.demo;
 
 import com.zx.demo.dao.UserMapper;
+import com.zx.demo.model.User;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,15 @@ class MybatisTestApplicationTests {
 
     @Test
     public void findByIdTest() {
-        Map<String,Object> userMap = userMapper.findById(1);
+        Map<String, Object> userMap = userMapper.findById(1);
         assertNotNull(userMap);
         assertEquals(userMap.get("NAME"), "Jone");
         assertEquals(userMap.get("AGE"), 18);
+    }
+
+    @Test
+    public void queryUserByIdTest() {
+        User user = userMapper.queryUserById(1);
+        System.out.println(user);
     }
 }
