@@ -6,7 +6,7 @@ spring:
     password: test
   sql:
     init:
-      #schema必须也存在,若只存在data,data中的sql也不会被执行
+      #schema必须存在,若只存在data,data中的sql也不会被执行
       schema-locations: classpath:db/schema-h2.sql
       data-locations: classpath:db/data-h2.sql
       mode: always
