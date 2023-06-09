@@ -1,14 +1,13 @@
-package com.zx.demo;
+package com.zx.demo.mysql;
 
 import com.github.jsonzou.jmockdata.JMockData;
 import com.zx.demo.dao.UserMapper;
 import com.zx.demo.model.User;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest // 加载Spring应用上下文
+@ActiveProfiles("mysql")
 class MybatisTestApplicationTests {
 
     @Autowired
