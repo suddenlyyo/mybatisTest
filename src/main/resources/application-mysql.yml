@@ -4,3 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/demo?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password:
+
+# 指定MyBatis 映射器文件的位置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
