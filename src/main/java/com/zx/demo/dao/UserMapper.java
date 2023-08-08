@@ -61,4 +61,13 @@ public interface UserMapper {
      */
     @Select("SELECT id, name, age FROM users ")
     List<User> getListUser();
+
+    /**
+     *  根据id列表查询用户信息
+     * @param ids id列表
+     * @return com.zx.demo.model.User
+     * @author: zhou  xun
+     * @since: 2023-08-08
+     */
+    List<User> getListUserById(@Param("ids") List<String> ids);
 }

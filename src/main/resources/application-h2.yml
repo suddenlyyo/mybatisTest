@@ -10,3 +10,6 @@ spring:
       schema-locations: classpath:db/schema-h2.sql
       data-locations: classpath:db/data-h2.sql
       mode: always
+# 指定MyBatis配置文件位置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

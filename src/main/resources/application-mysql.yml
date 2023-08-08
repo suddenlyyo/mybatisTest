@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/demo?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
-    password:
+    password: Lv997945!
 
 # 指定MyBatis 映射器文件的位置
 mybatis:

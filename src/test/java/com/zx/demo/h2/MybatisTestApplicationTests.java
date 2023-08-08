@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -50,25 +52,15 @@ class MybatisTestApplicationTests {
     }
 
     @Test
-    @Transactional(rollbackFor = Exception.class)
-    public void TransactionalTest() {
-        List<User> userList = new ArrayList<>();
-        User user = new User(6, "cs", 19);
-        userList.add(user);
-        //批量插入
-        userMapper.batchInsertUser(userList);
-        // 抛出异常测试回滚
-        try {
-            int a = 10;
-            int b = a / 0;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    @Test
     public void getListUserTest() {
         List<User> listUser = userMapper.getListUser();
         listUser.forEach(System.out::println);
+    }
+
+    @Test
+    public void getListUserByIdTest() {
+        List<User> listUser = userMapper.getListUserById(Stream.of("7").collect(Collectors.toList()));
+        ArrayList<String> strings = listUser.stream().map(User::getName).collect(Collectors.toCollection(ArrayList::new));
+        System.out.println(strings.get(0));
     }
 }
