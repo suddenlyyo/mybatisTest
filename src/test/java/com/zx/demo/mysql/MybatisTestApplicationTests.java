@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,9 @@ class MybatisTestApplicationTests {
     @Test
     public void getUserByIdTest() {
         User user = userMapper.getUserById(1);
-        System.out.println(user);
+        if(!ObjectUtils.isEmpty(user)) {
+            System.out.println(user);
+        }
     }
 
     @Test
@@ -106,7 +109,9 @@ class MybatisTestApplicationTests {
     @Test
     public void getListUserTest() {
         List<User> listUser = userMapper.getListUser();
-        System.out.println("以下是查询到的用户信息:");
-        listUser.forEach(System.out::println);
+        if(!listUser.isEmpty()) {
+            System.out.println("以下是查询到的用户信息:");
+            listUser.forEach(System.out::println);
+        }
     }
 }
