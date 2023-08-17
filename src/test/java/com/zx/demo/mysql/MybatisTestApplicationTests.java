@@ -6,11 +6,11 @@ import com.zx.demo.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,9 @@ class MybatisTestApplicationTests {
     @Test
     public void getUserByIdTest() {
         User user = userMapper.getUserById(1);
-        System.out.println(user);
+        if(!ObjectUtils.isEmpty(user)) {
+            System.out.println(user);
+        }
     }
 
     @Test
@@ -91,7 +93,7 @@ class MybatisTestApplicationTests {
     @Test
     //@Rollback(false)//springboot Junit单元测试默认事务不提交,要提交要设置这个注解,但是开启这个注解后跑异常不回滚了
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
-    public void TransactionalTest() {
+    public void transactionalTest() {
         List<User> userList = new ArrayList<>();
         //mock User对象
         User user = JMockData.mock(User.class);
@@ -106,7 +108,9 @@ class MybatisTestApplicationTests {
     @Test
     public void getListUserTest() {
         List<User> listUser = userMapper.getListUser();
-        System.out.println("以下是查询到的用户信息:");
-        listUser.forEach(System.out::println);
+        if(!listUser.isEmpty()) {
+            System.out.println("以下是查询到的用户信息:");
+            listUser.forEach(System.out::println);
+        }
     }
 }

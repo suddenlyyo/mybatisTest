@@ -4,12 +4,10 @@ import com.github.jsonzou.jmockdata.JMockData;
 import com.zx.demo.dao.UserMapper;
 import com.zx.demo.model.User;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,9 @@ class MybatisTestApplicationTests {
     @Test
     public void getUserByIdTest() {
         User user = userMapper.getUserById(1);
-        System.out.println(user);
+        if(!ObjectUtils.isEmpty(user)) {
+            System.out.println(user);
+        }
     }
 
     @Test
@@ -54,13 +54,18 @@ class MybatisTestApplicationTests {
     @Test
     public void getListUserTest() {
         List<User> listUser = userMapper.getListUser();
-        listUser.forEach(System.out::println);
+        if(!listUser.isEmpty()) {
+            listUser.forEach(System.out::println);
+        }
     }
 
     @Test
     public void getListUserByIdTest() {
         List<User> listUser = userMapper.getListUserById(Stream.of("7").collect(Collectors.toList()));
         ArrayList<String> strings = listUser.stream().map(User::getName).collect(Collectors.toCollection(ArrayList::new));
-        System.out.println(strings.get(0));
+        if(!listUser.isEmpty()) {
+            listUser.forEach(System.out::println);
+        }
+
     }
 }
