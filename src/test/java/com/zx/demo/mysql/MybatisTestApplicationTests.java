@@ -15,6 +15,8 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -37,17 +39,24 @@ class MybatisTestApplicationTests {
     @Test
     public void getUserByIdTest() {
         User user = userMapper.getUserById(1);
-        if(!ObjectUtils.isEmpty(user)) {
+        if (!ObjectUtils.isEmpty(user)) {
             System.out.println(user);
         }
     }
 
     @Test
     public void batchInsertUserTest() {
-        List<User> userList = new ArrayList<>();
-        //mock User对象
-        User user = JMockData.mock(User.class);
-        userList.add(user);
+        List<User> userList = userMapper.getListUser();
+        List<Integer> ids = userList.stream().map(User::getId).collect(Collectors.toList());
+        //mock 10000个数据
+        IntStream.rangeClosed(1, 10000).forEach(i -> {
+            //mock User对象
+            User user = JMockData.mock(User.class);
+            if (!ids.contains(user.getId())) {
+                userList.add(user);
+            }
+        });
+
         //批量插入
         userMapper.batchInsertUser(userList);
     }
@@ -108,7 +117,7 @@ class MybatisTestApplicationTests {
     @Test
     public void getListUserTest() {
         List<User> listUser = userMapper.getListUser();
-        if(!listUser.isEmpty()) {
+        if (!listUser.isEmpty()) {
             System.out.println("以下是查询到的用户信息:");
             listUser.forEach(System.out::println);
         }
