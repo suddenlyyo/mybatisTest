@@ -152,6 +152,10 @@ class MybatisTestApplicationTests {
         if (data == null) {
             return;
         }
+        //in查询大于1000 数据库会报错，
+        if(sizeLimit>1000){
+            return;
+        }
         if (data.size() > sizeLimit) {
             int totalPage = (data.size() + pageSize - 1) / pageSize;
             for (int paNow = 0; paNow < totalPage; paNow++) {
