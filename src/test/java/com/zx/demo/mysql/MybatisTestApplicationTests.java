@@ -141,10 +141,9 @@ class MybatisTestApplicationTests {
      * 分页处理，解决sql查询in参数大于1000报错问题
      *
      * @param sizeLimit 单次查询的in参数上限
-     * @param pageSize  需要分页处理查询的数据
+     * @param pageSize  分页大小
      * @param data      需要分页处理查询的数据
      * @param queryIn   查询的消费着
-     * @return
      * @author: zhou  xun
      * @since: 2023-09-22
      */
@@ -153,7 +152,7 @@ class MybatisTestApplicationTests {
             return;
         }
         //in查询大于1000 数据库会报错，
-        if(sizeLimit>1000){
+        if (sizeLimit > 1000) {
             return;
         }
         if (data.size() > sizeLimit) {
