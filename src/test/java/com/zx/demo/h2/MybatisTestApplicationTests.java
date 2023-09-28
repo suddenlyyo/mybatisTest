@@ -61,10 +61,12 @@ class MybatisTestApplicationTests {
 
     @Test
     public void getListUserByIdTest() {
-        List<User> listUser = userMapper.getListUserById(Stream.of("7").collect(Collectors.toList()));
-        ArrayList<String> strings = listUser.stream().map(User::getName).collect(Collectors.toCollection(ArrayList::new));
-        if(!listUser.isEmpty()) {
-            listUser.forEach(System.out::println);
+        List<User> listUser = userMapper.getListUserById(Stream.of(7)
+                .collect(Collectors.toList()));
+        ArrayList<String> strings = listUser.stream().map(User::getName).
+                collect(Collectors.toCollection(ArrayList::new));
+        if(!strings.isEmpty()) {
+            strings.forEach(System.out::println);
         }
 
     }

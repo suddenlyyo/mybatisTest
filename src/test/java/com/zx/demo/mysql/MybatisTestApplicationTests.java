@@ -15,6 +15,8 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -122,4 +124,44 @@ class MybatisTestApplicationTests {
             listUser.forEach(System.out::println);
         }
     }
+
+    @Test
+    public void getListUserInTest() {
+        List<User> listUser = userMapper.getListUser();
+        List<User> queryIn = new ArrayList<>();
+        if (!listUser.isEmpty()) {
+            List<Integer> ids = listUser.stream().map(User::getId).collect(Collectors.toList());
+            Consumer<List<Integer>> queryInConsumer = (list) -> queryIn.addAll(userMapper.getListUserById(list));
+            pageSubList(ids, queryInConsumer);
+            queryIn.forEach(System.out::println);
+        }
+    }
+
+    /**
+     * 分页处理，解决sql查询in参数大于1000报错问题
+     *
+     * @param data 需要分页处理查询的数据
+     * @return
+     * @author: zhou  xun
+     * @since: 2023-09-22
+     */
+    private <T> void pageSubList(List<T> data, Consumer<List<T>> queryIn) {
+        if (data == null) {
+            return;
+        }
+        if (data.size() > 1000) {
+            int pageSize = 500;
+            int totalPage = (data.size() + pageSize - 1) / pageSize;
+            for (int paNow = 0; paNow < totalPage; paNow++) {
+                int endIndex = Math.min(data.size(), pageSize);
+                List<T> subIds = data.subList(0, endIndex);
+                queryIn.accept(subIds);
+                //移除已经截取过的数据
+                data.removeIf(subIds::contains);
+            }
+        } else {
+            queryIn.accept(data);
+        }
+    }
+
 }
