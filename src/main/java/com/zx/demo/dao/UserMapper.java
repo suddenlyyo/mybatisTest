@@ -69,5 +69,5 @@ public interface UserMapper {
      * @author: zhou  xun
      * @since: 2023-08-08
      */
-    List<User> getListUserById(@Param("ids") List<String> ids);
+    List<User> getListUserById(@Param("ids") List<Integer> ids);
 }
