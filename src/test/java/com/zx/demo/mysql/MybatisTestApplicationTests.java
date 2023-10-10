@@ -15,7 +15,6 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -49,18 +48,14 @@ class MybatisTestApplicationTests {
     @Test
     public void batchInsertUserTest() {
         List<User> userList = userMapper.getListUser();
-        List<Integer> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         //mock 10000个数据
         IntStream.rangeClosed(1, 10000).forEach(i -> {
             //mock User对象
             User user = JMockData.mock(User.class);
-            if (!ids.contains(user.getId())) {
-                userList.add(user);
-            }
+            userList.add(user);
         });
-
-        //批量插入
-        userMapper.batchInsertUser(userList);
+        //批量插入 使用insert into ... ignore语法  如果存在则不插入
+        userMapper.batchInsertUser(userList.stream().distinct().collect(Collectors.toList()));
     }
 
     /**

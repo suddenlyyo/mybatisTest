@@ -45,7 +45,7 @@ public interface UserMapper {
      */
     @Insert({
             "<script>",
-            "insert into users (id, name, age) values ",
+            "insert ignore into users (id, name, age) values ",
             "<foreach collection='list' item='item' separator=','>",
             "(#{item.id},#{item.name}, #{item.age})",
             "</foreach>",
