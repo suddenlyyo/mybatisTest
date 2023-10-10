@@ -49,18 +49,14 @@ class MybatisTestApplicationTests {
     @Test
     public void batchInsertUserTest() {
         List<User> userList = userMapper.getListUser();
-        List<Integer> ids = userList.stream().map(User::getId).collect(Collectors.toList());
-        //mock 10000个数据
+       //mock 10000个数据
         IntStream.rangeClosed(1, 10000).forEach(i -> {
             //mock User对象
             User user = JMockData.mock(User.class);
-            if (!ids.contains(user.getId())) {
-                userList.add(user);
-            }
+            userList.add(user);
         });
-
-        //批量插入
-        userMapper.batchInsertUser(userList);
+        //批量插入 使用insert into ... ignore语法  如果存在则不插入
+        userMapper.batchInsertUser(userList.stream().distinct().collect(Collectors.toList()));
     }
 
     /**
